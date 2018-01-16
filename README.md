@@ -8,10 +8,10 @@ This is the code for [this](https://youtu.be/gSQXq2_j-mw) video on Youtube by Si
 
 ## Dependencies
 
-* ethereumjs-testrpc 
-* web3@0.20.1
-* solc
-
+* "ethereumjs-testrpc": "^6.0.3"
+* "solc": "^0.4.19"
+* "web3": "^1.0.0-beta.27"
+    
 Install missing dependencies with [npm](https://www.npmjs.com/). 
 
 ```
@@ -30,21 +30,23 @@ node_modules/ethereumjs-testrpc/build/cli.node.js
 Run the following commands to open the node console then deploy your contract to the test chain
 
 ```
-siraj:~/hello_world_voting$ node
+$ node
 > Web3 = require('web3')
 > web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-> code = fs.readFileSync('Voting.sol').toString()
+> code = fs.readFileSync('voting.sol').toString()
 > solc = require('solc')
 > compiledCode = solc.compile(code)
 > abiDefinition = JSON.parse(compiledCode.contracts[':Voting'].interface)
-> VotingContract = web3.eth.contract(abiDefinition)
 > byteCode = compiledCode.contracts[':Voting'].bytecode
-> deployedContract = VotingContract.new(['Rama','Nick','Jose'],{data: byteCode, from: web3.eth.accounts[0], gas: 4700000})
-> deployedContract.address
-> contractInstance = VotingContract.at(deployedContract.address)
+> var accounts;
+>  var account;
+>  web3.eth.getAccounts().then(function(result){  this.accounts = result;  this.account = accounts[0];  });
+
+> voteContract = new web3.eth.Contract(abiDefinition, { from: account });
+
+> voteContract.deploy({data: byteCode, arguments: [[web3.utils.fromAscii('Rama'),web3.utils.fromAscii('Nick'),web3.utils.fromAscii('Jose')]]}).send({ from: account, gas: 1500000}).on('error', function(error){ console.log(error) }).then(function(newContractInstance){ console.log(newContractInstance.options.address) });
 ```
 
-Interact with the contract via the html page attached, just open it in your browser. See [this](https://medium.com/@mvmurthy/full-stack-hello-world-voting-ethereum-dapp-tutorial-part-1-40d2d0d807c2) tutorial for more details. 
 
 ## Credits
 
