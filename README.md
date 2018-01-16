@@ -47,6 +47,10 @@ $ node
 > voteContract.deploy({data: byteCode, arguments: [[web3.utils.fromAscii('Rama'),web3.utils.fromAscii('Nick'),web3.utils.fromAscii('Jose')]]}).send({ from: account, gas: 1500000}).on('error', function(error){ console.log(error) }).then(function(newContractInstance){ console.log(newContractInstance.options.address) });
 ```
 
+Replace the contract address with the newContractInstance.options.address, within the index.js file:
+
+    contractAddress = '0x84572a574ce1cfE122DDe9bF774E2F6023B28f3f';
+
 
 ## Credits
 
