@@ -27,6 +27,10 @@ After all dependancies are installed, run the `testrpc` service with:
 node_modules/ethereumjs-testrpc/build/cli.node.js
 ```
 
+Or use Ganache for run the Ethereum localnet ( Suggested ):
+* https://github.com/trufflesuite/ganache
+* http://truffleframework.com/ganache/
+
 Run the following commands to open the node console then deploy your contract to the test chain
 
 ```
