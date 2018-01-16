@@ -1,10 +1,10 @@
 # Your_First_Decentralized_Application
-This is the code for "A Guide to Building Your First Decentralized Application" by Siraj Raval on Youtube
+This is the UPDATED code for "A Guide to Building Your First Decentralized Application" by Siraj Raval on Youtube
 
 
 ## Overview
 
-This is the code for [this](https://youtu.be/gSQXq2_j-mw) video on Youtube by Siraj Raval. It's a guide on how to build your first decentralized application. 
+This is the UPDATED code for [this](https://youtu.be/gSQXq2_j-mw) video on Youtube by Siraj Raval. It's a guide on how to build your first decentralized application. 
 
 ## Dependencies
 
@@ -15,7 +15,7 @@ This is the code for [this](https://youtu.be/gSQXq2_j-mw) video on Youtube by Si
 Install missing dependencies with [npm](https://www.npmjs.com/). 
 
 ```
-> git clone git@github.com:llSourcell/Your_First_Decentralized_Application.git
+> git clone git@github.com:jagarzone6/Your_First_Decentralized_Application.git
 > cd Your_First_Decentralized_Application
 > npm install 
 ```
