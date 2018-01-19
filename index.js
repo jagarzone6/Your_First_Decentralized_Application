@@ -2,49 +2,12 @@
 Web3 = require('web3');
 */
 web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8101"));
-abi = JSON.parse('[ { "constant": false, "inputs": [ { "name": "candidate", "type": "bytes32" } ], "name": "totalVotesFor", "outputs": [ { "name": "", "type": "uint8" } ], "payable": false, "stateMutability": "nonpayable", "type": "function", "signature": "0x2f265cf7" }, { "constant": false, "inputs": [ { "name": "candidate", "type": "bytes32" } ], "name": "validCandidate", "outputs": [ { "name": "", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function", "signature": "0x392e6678" }, { "constant": true, "inputs": [ { "name": "", "type": "bytes32" } ], "name": "votesReceived", "outputs": [ { "name": "", "type": "uint8" } ], "payable": false, "stateMutability": "view", "type": "function", "signature": "0x7021939f" }, { "constant": true, "inputs": [ { "name": "", "type": "uint256" } ], "name": "candidateList", "outputs": [ { "name": "", "type": "bytes32" } ], "payable": false, "stateMutability": "view", "type": "function", "signature": "0xb13c744b" }, { "constant": false, "inputs": [ { "name": "candidate", "type": "bytes32" } ], "name": "voteForCandidate", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function", "signature": "0xcc9ab267" }, { "inputs": [ { "name": "candidateNames", "type": "bytes32[]" } ], "payable": false, "stateMutability": "nonpayable", "type": "constructor", "signature": "constructor" } ] ');
-// In your nodejs console, execute contractInstance.address to get the address at which the contract is deployed and change the line below to use your deployed address
-contractAddress = '0x2124d46F6e11EF42656B0367CF26a867aD80e308';
+abi = JSON.parse('[{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"uint256"}],"name":"bids","outputs":[{"name":"blindedBid","type":"bytes32"},{"name":"deposit","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"ended","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"auctionEnd","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"beneficiary","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"withdraw","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"biddingEnd","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_values","type":"uint256[]"},{"name":"_fake","type":"bool[]"},{"name":"_secret","type":"bytes32[]"}],"name":"reveal","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"highestBidder","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_blindedBid","type":"bytes32"}],"name":"bid","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"revealEnd","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"highestBid","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"_biddingTime","type":"uint256"},{"name":"_revealTime","type":"uint256"},{"name":"_beneficiary","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"winner","type":"address"},{"indexed":false,"name":"highestBid","type":"uint256"}],"name":"AuctionEnded","type":"event"}]');
+// In your nodejs console, execute contractInstance.address t
+o get the address at which the contract is deployed and change the line below to use your deployed address
+contractAddress = '0x03476F630B2Ad1D6cBf466af03D2d7075DcF1597';
 contractInstance = new web3.eth.Contract(abi, contractAddress);
 
-candidates = {"Rama": "candidate-1", "Nick": "candidate-2", "Jose": "candidate-3"};
+var account = '0xf86dF96aCC3B97278DFdeeDC12C8B1D8B5c605Cf';
 
-var accounts;
-var account;
-web3.eth.getAccounts().then(function(result){
-this.accounts = result;
-this.account = '0xf86dF96aCC3B97278DFdeeDC12C8B1D8B5c605Cf';
-});
-
-
-
-function voteForCandidate() {
-  candidateName = $("#candidate").val();
-  contractInstance.methods.voteForCandidate(web3.utils.fromAscii(candidateName)).send({from: account}).then(function(receipt) {
-
-  for (var i = 0; i < candidateNames.length; i++) {
-    let name = candidateNames[i];
-
-    contractInstance.methods.totalVotesFor(web3.utils.fromAscii(name)).call().then(function(result){
-                      let val = result;
-                       $("#" + candidates[name]).html(val);
-                                                             });
-
-  }
-
-   });
-
-}
-
-$(document).ready(function() {
-  candidateNames = Object.keys(candidates);
-  for (var i = 0; i < candidateNames.length; i++) {
-    let name = candidateNames[i];
-
-    contractInstance.methods.totalVotesFor(web3.utils.fromAscii(name)).call().then(function(result){
-                      let val = result;
-                       $("#" + candidates[name]).html(val);
-                                                             });
-
-  }
-});
+contractInstance.methods.bid(web3.utils.keccak256('500000000000000000000000000000000000000000000000000000000000000000000000000000','false','Jorge')).send({from: account, value: web3.utils.toWei('50','ether')}).then(function(receipt) {console.log(receipt)})

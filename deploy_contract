@@ -1,14 +1,12 @@
 Web3 = require('web3');
 web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8101"));
-code = fs.readFileSync('voting.sol').toString();
+code = fs.readFileSync('BlindAuction.sol').toString();
 solc = require('solc');
 compiledCode = solc.compile(code);
-abiDefinition = JSON.parse(compiledCode.contracts[':Voting'].interface);
-byteCode = compiledCode.contracts[':Voting'].bytecode;
-var accounts;
+abiDefinition = JSON.parse(compiledCode.contracts[':BlindAuction'].interface);
+byteCode = compiledCode.contracts[':BlindAuction'].bytecode;
 var account = '0xf86dF96aCC3B97278DFdeeDC12C8B1D8B5c605Cf';
-web3.eth.getAccounts().then(function(result){  this.accounts = result;  this.account = accounts[0];  });
 
-voteContract = new web3.eth.Contract(abiDefinition, { from: account });
+blindAuctionContract = new web3.eth.Contract(abiDefinition, { from: account });
 
-voteContract.deploy({data: '0x'+byteCode, arguments: [[web3.utils.fromAscii('Rama'),web3.utils.fromAscii('Nick'),web3.utils.fromAscii('Jose')]]}).send({ from: account, gas: 1500000}).on('error', function(error){ console.log(error) }).then(function(newContractInstance){ console.log(newContractInstance.options.address) });
+blindAuctionContract.deploy({data: '0x'+byteCode, arguments: [1516372295,1516379495,'0xf86dF96aCC3B97278DFdeeDC12C8B1D8B5c605Cf']}).send({ from: account, gas: 1500000}).on('error', function(error){ console.log(error) }).then(function(newContractInstance){ console.log(newContractInstance.options.address) });
