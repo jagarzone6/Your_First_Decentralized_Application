@@ -41,7 +41,9 @@ contract RC {
             deliveries[_delivery_hash].pickup_hash = _pickup_hash;
             /*Record price of this operation to refund RezaParcero later*/
             deliveries[_delivery_hash].status = 2;
-        }
+        }else {
+                     revert();
+                     }
     }
 
     function confirm_pickup(bytes32 _delivery_hash, string _pickup_key, bytes32 _dropoff_hash) public {
@@ -53,7 +55,9 @@ contract RC {
             && deliveries[_delivery_hash].status == 2) {
             deliveries[_delivery_hash].status = 3;
             deliveries[_delivery_hash].drop_off_hash = _dropoff_hash;
-        }
+        }else {
+                     revert();
+                     }
     }
 
     function confirm_drop(bytes32 _delivery_hash, string _drop_off_key, string _delivery_key) public {
@@ -66,6 +70,8 @@ contract RC {
                 deliveries[_delivery_hash].reza_parcero.transfer(deliveries[_delivery_hash].price);
                 delete deliveries[_delivery_hash];
 
+            } else {
+            revert();
             }
         }
 

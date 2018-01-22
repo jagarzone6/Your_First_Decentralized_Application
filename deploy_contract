@@ -6,8 +6,8 @@ abiDefinition = JSON.parse(compiledCode.contracts[':RC'].interface);
 byteCode = compiledCode.contracts[':RC'].bytecode;
 var account = '0xf86dF96aCC3B97278DFdeeDC12C8B1D8B5c605Cf';
 
-blindAuctionContract = new web3.eth.Contract(abiDefinition, { from: account });
+rcContract = new web3.eth.Contract(abiDefinition, { from: account });
 
-blindAuctionContract.deploy({data: '0x'+byteCode}).send({ from: account, gas: 1500000}).on('error', function(error){ console.log(error) }).then(function(newContractInstance){ console.log(newContractInstance.options.address) });
+rcContract.deploy({data: '0x'+byteCode}).send({ from: account, gas: 1500000}).on('error', function(error){ console.log(error) }).then(function(newContractInstance){ console.log(newContractInstance.options.address) });
 
-0x91cFBdFD9F08f92D361aDE9D0E871F2C5DA1a777
+0xB91d9f7032B1B51Eb407644A82979eEf86b10c00
