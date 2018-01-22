@@ -75,5 +75,11 @@ contract RC {
             }
         }
 
+function delete_delivery(bytes32 _delivery_hash) public {
+
+                delete deliveries[_delivery_hash];
+
+
+        }
 
 }
