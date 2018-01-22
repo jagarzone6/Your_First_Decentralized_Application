@@ -21,7 +21,7 @@ contract RC {
         }
 
     function new_delivery( bytes32 _delivery_hash, address _receiver)
-            public
+            public payable
         {
             deliveries[_delivery_hash] = Delivery({
                 sender: msg.sender,
@@ -44,17 +44,19 @@ contract RC {
         }
     }
 
-    function confirm_pickup(bytes32 _delivery_hash, bytes32 _pickup_key, bytes32 _dropoff_hash) public {
+    function confirm_pickup(bytes32 _delivery_hash, string _pickup_key, bytes32 _dropoff_hash) public {
         /* encode of key_world (md5)  and compare with deliveries[_delivery_hash].pickup_hash*/
-         if (deliveries[_delivery_hash].pickup_hash == keccak256(_pickup_key)
-            && msg.sender == deliveries[_delivery_hash].sender
+        bytes32 h = keccak256(_pickup_key);
+        address a = msg.sender;
+         if (deliveries[_delivery_hash].pickup_hash == h
+            && a  == deliveries[_delivery_hash].sender
             && deliveries[_delivery_hash].status == 2) {
             deliveries[_delivery_hash].status = 3;
             deliveries[_delivery_hash].drop_off_hash = _dropoff_hash;
         }
     }
 
-    function confirm_drop(bytes32 _delivery_hash, bytes32 _drop_off_key, bytes32 _delivery_key) public {
+    function confirm_drop(bytes32 _delivery_hash, string _drop_off_key, string _delivery_key) public {
             /* encode of key_world (md5)  and compare with deliveries[_delivery_hash].pickup_hash*/
              if (deliveries[_delivery_hash].drop_off_hash == keccak256(_drop_off_key)
                 && _delivery_hash == keccak256(_delivery_key)
