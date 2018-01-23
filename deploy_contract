@@ -1,13 +1,17 @@
 Web3 = require('web3');
-web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8101"));
+//web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8101"));
+web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 solc = require('solc');
 compiledCode = solc.compile(fs.readFileSync('rc.sol').toString());
 abiDefinition = JSON.parse(compiledCode.contracts[':RC'].interface);
 byteCode = compiledCode.contracts[':RC'].bytecode;
-var account = '0xf86dF96aCC3B97278DFdeeDC12C8B1D8B5c605Cf';
+//var account = '0xf86dF96aCC3B97278DFdeeDC12C8B1D8B5c605Cf';
+var account = '0x0F4F2Ac550A1b4e2280d04c21cEa7EBD822934b5';
 
 rcContract = new web3.eth.Contract(abiDefinition, { from: account });
 
-rcContract.deploy({data: '0x'+byteCode}).send({ from: account, gas: 1500000}).on('error', function(error){ console.log(error) }).then(function(newContractInstance){ console.log(newContractInstance.options.address) });
+rcContract.deploy({data: '0x'+byteCode}).send({ from: account, gas: 300000000}).on('error', function(error){ console.log(error) }).then(function(newContractInstance){ console.log(newContractInstance.options.address) });
 
 0xB91d9f7032B1B51Eb407644A82979eEf86b10c00
+
+0x8DA7eB4Ec3A4c1291797e13DB723f9046afF4a1C
